@@ -1,8 +1,14 @@
 package com.dreamfish.audiorecord;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+
+import androidx.core.content.FileProvider;
 
 import com.dreamfish.record.FileUtil;
 
@@ -31,6 +37,22 @@ public class ListActivity extends Activity {
 
         adapter = new FileListAdapter(this, list);
         listView.setAdapter(adapter);
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+//                Uri uri = Uri.fromFile(list.get(position));
+                Uri contentUri = FileProvider.getUriForFile(ListActivity.this, getApplicationContext().getPackageName() + ".FileProvider", list.get(position));
+                intent.setDataAndType(contentUri,"audio/*");
+//                startActivity(intent);
+            }
+        });
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

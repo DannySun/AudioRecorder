@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class FileUtil {
 
-    private static String rootPath = "pauseRecordDemo";
+    private static String rootPath = "audio";
     //原始文件(不能播放)
     private final static String AUDIO_PCM_BASEPATH = "/" + rootPath + "/pcm/";
     //可播放的高质量音频文件
@@ -65,12 +65,22 @@ public class FileUtil {
             String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + AUDIO_WAV_BASEPATH;
             File file = new File(fileBasePath);
             //创建目录
-            if (!file.exists()) {
-                file.mkdirs();
-            }
+            mkdir(file);
             mAudioWavPath = fileBasePath + fileName;
         }
         return mAudioWavPath;
+    }
+
+    public static boolean mkdir(File file) {
+        if (file.exists()) {
+            return true;
+        } else {
+            if (file.mkdir()) {
+                return true;
+            } else {
+                return mkdir(file.getParentFile());
+            }
+        }
     }
 
     /**

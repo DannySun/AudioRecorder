@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -21,6 +22,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     Button pause;
     Button pcmList;
     Button wavList;
+    TextView backView;
 
     AudioRecorder audioRecorder;
 
@@ -59,9 +61,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         pause.setOnClickListener(this);
         pcmList.setOnClickListener(this);
         wavList.setOnClickListener(this);
+        backView.setOnClickListener(this);
     }
 
     private void init() {
+        backView = findViewById(R.id.back);
         start = findViewById(R.id.start);
         pause = findViewById(R.id.pause);
         pcmList = findViewById(R.id.pcmList);
@@ -73,6 +77,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.back:
+                finish();
+                break;
             case R.id.start:
                 try {
                     if (audioRecorder.getStatus() == AudioRecorder.Status.STATUS_NO_READY) {

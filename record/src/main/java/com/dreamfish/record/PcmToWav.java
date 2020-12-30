@@ -47,9 +47,9 @@ public class PcmToWav {
         header.fileLength = TOTAL_SIZE + (44 - 8);
         header.FmtHdrLeth = 16;
         header.BitsPerSample = 16;
-        header.Channels = 2;
+        header.Channels = 1;
         header.FormatTag = 0x0001;
-        header.SamplesPerSec = 8000;
+        header.SamplesPerSec = 44100;
         header.BlockAlign = (short) (header.Channels * header.BitsPerSample / 8);
         header.AvgBytesPerSec = header.BlockAlign * header.SamplesPerSec;
         header.DataHdrLeth = TOTAL_SIZE;
@@ -72,6 +72,8 @@ public class PcmToWav {
 
         //合成所有的pcm文件的数据，写到目标文件
         try {
+
+
             buffer = new byte[1024 * 4]; // Length of All Files, Total Size
             InputStream inStream = null;
             OutputStream ouStream = null;
