@@ -65,20 +65,27 @@ public class FileUtil {
             String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + AUDIO_WAV_BASEPATH;
             File file = new File(fileBasePath);
             //创建目录
-            mkdir(file);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+//            mkdirs(new File("/sdcard/audio/it/is/test/dir"));
             mAudioWavPath = fileBasePath + fileName;
         }
         return mAudioWavPath;
     }
 
-    public static boolean mkdir(File file) {
+    //递归方式创建多层文件夹
+    public static boolean mkdirs(File file) {
         if (file.exists()) {
             return true;
         } else {
             if (file.mkdir()) {
                 return true;
             } else {
-                return mkdir(file.getParentFile());
+                if(mkdirs(file.getParentFile())){
+                    return file.mkdir();
+                }
+                return false;
             }
         }
     }
