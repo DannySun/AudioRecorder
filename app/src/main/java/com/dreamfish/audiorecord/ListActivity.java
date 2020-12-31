@@ -42,10 +42,11 @@ public class ListActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
 //                Uri uri = Uri.fromFile(list.get(position));
                 Uri contentUri = FileProvider.getUriForFile(ListActivity.this, getApplicationContext().getPackageName() + ".FileProvider", list.get(position));
                 intent.setDataAndType(contentUri,"audio/*");
-//                startActivity(intent);
+                startActivity(intent);
             }
         });
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener(){
